@@ -2,24 +2,33 @@
 
 
 SECTION .data
-    msg     db      "Hello, new world!", 0h
-    msg2    db      "Now this is an epic gamer moment", 0h
+    msg     db      "Please enter your name: ", 0h
+    msg2    db      "Hello, ", 0h
  
+SECTION .bss
+sinput:     resb 255
+
+
 SECTION .text
 global  _start
 _start:
-    pop     ecx
 
-nextArg:
-    cmp     ecx, 0h
-    jz      noMoreArgs
-    pop     eax
-    call    sprintLF
-    dec     ecx
-    jmp     nextArg
+    mov     eax, msg
+    call    sprint
+
+    mov     edx, 255        ;number of bytes to read
+    mov     ecx, sinput     ;reserved space to store our input
+    mov     ebx, 0          ;read from the stdin file
+    mov     eax, 3          ;invoke sys_read (kernal OPCODE 3)
+    int     80h
 
 
-noMoreArgs:
+    mov     eax, msg2
+    call    sprint
+
+    mov     eax, sinput
+    call    sprint
+
     call    quit
 
 
