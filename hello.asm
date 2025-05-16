@@ -8,13 +8,19 @@ SECTION .data
 SECTION .text
 global  _start
 _start:
-    mov     eax, msg
-    call    sprintLF
-    
-    mov     eax, msg2
-    call    sprintLF
+    pop     ecx
 
-    call quit
+nextArg:
+    cmp     ecx, 0h
+    jz      noMoreArgs
+    pop     eax
+    call    sprintLF
+    dec     ecx
+    jmp     nextArg
+
+
+noMoreArgs:
+    call    quit
 
 
 
