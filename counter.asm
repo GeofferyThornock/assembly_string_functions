@@ -13,7 +13,7 @@ nextNumber:
     cmp     ecx, 10
     jne     nextNumber
     
-    call    quit
+    call quit
 
 
 
